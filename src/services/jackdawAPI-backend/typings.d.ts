@@ -17,6 +17,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseLoginUserDetailVO = {
+    code?: number;
+    data?: LoginUserDetailVO;
+    message?: string;
+  };
+
   type BaseResponselong = {
     code?: number;
     data?: number;
@@ -148,6 +154,19 @@ declare namespace API {
     userProfile?: string;
     userRole?: string;
   };
+  type LoginUserDetailVO = {
+    createTime?: string;
+    id?: number;
+    updateTime?: string;
+    userAvatar?: string;
+    userName?: string;
+    userProfile?: string;
+    userRole?: string;
+    accessKey?: string;
+    secretKey?: string;
+    count?: number;
+  };
+
 
   type OrderItem = {
     asc?: boolean;
@@ -291,7 +310,6 @@ declare namespace API {
     /** code */
     code: string;
   };
-
   type UserLoginRequest = {
     userAccount?: string;
     userPassword?: string;

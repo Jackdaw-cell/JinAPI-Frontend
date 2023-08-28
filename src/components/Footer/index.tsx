@@ -23,12 +23,6 @@ const Footer: React.FC = () => {
           href: 'https://github.com/Jackdaw-cell',
           blankTarget: true,
         },
-        // {
-        //   key: '鱼皮接口',
-        //   title: '鱼皮接口',
-        //   href: 'https://ant.design',
-        //   blankTarget: true,
-        // },
       ]}
     />
   );

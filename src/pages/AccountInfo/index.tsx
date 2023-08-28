@@ -1,67 +1,97 @@
 import { PageContainer } from '@ant-design/pro-components';
 import React, { useEffect, useState } from 'react';
-import { List, message } from 'antd';
-import { listInterfaceInfoByPageUsingGET } from '@/services/yuapi-backend/interfaceInfoController';
+import {
+  Layout,
+  message,
+  Space,
+  Cascader,
+  Form,
+  Input,
+  Select,
+  Upload,} from 'antd';
+import {getLoginUserDetailUsingGET, getLoginUserUsingGET} from "@/services/jackdawAPI-backend/userController";
 
+type loginUserDetail={
+  id: string;
+  userName: string;
+  userAvatar: string;
+  userProfile: string;
+  userRole: string;
+  createTime: string;
+  updateTime: string;
+  accessKey?: string;
+  secretKey?: string;
+  count?: number;
+}
+//样式
+const { Sider, Content } = Layout;
+const siderStyle: React.CSSProperties = {
+  textAlign: 'center',
+  lineHeight: '120px',
+  color: '#fff',
+  backgroundColor: '#3ba0e9',
+};
 /**
  * 主页
  * @constructor
  */
 const Index: React.FC = () => {
-  const [loading, setLoading] = useState(false);
-  const [list, setList] = useState<API.InterfaceInfo[]>([]);
-  const [total, setTotal] = useState<number>(0);
-
+  const [currentUser, setcurrentUser] = useState<loginUserDetail>();
+  const normFile = (e: any) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
   const loadData = async (current = 1, pageSize = 5) => {
-    setLoading(true);
+
     try {
-      const res = await listInterfaceInfoByPageUsingGET({
-        current,
-        pageSize,
-        connectType: 0
-      });
-      setList(res?.data?.records ?? []);
-      setTotal(res?.data?.total ?? 0);
+      const msg = await getLoginUserDetailUsingGET();
+      if (msg.code==0) {
+        setcurrentUser(msg.data)
+        console.log(currentUser)
+
+        }
     } catch (error: any) {
       message.error('请求失败，' + error.message);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
     loadData();
   }, []);
 
+
   return (
-    <PageContainer title="短连接接口">
-      <List
-        className="my-list"
-        loading={loading}
-        itemLayout="horizontal"
-        dataSource={list}
-        renderItem={(item) => {
-          const apiLink = `/short_interface_info/${item.id}`;
-          return (
-            <List.Item actions={[<a key={item.id} href={apiLink}>查看</a>]}>
-              <List.Item.Meta
-                title={<a href={apiLink}>{item.name}</a>}
-                description={item.description}
-              />
-            </List.Item>
-          );
-        }}
-        pagination={{
-          // eslint-disable-next-line @typescript-eslint/no-shadow
-          showTotal(total: number) {
-            return '总数：' + total;
-          },
-          pageSize: 5,
-          total,
-          onChange(page, pageSize) {
-            loadData(page, pageSize);
-          },
-        }}
-      />
+
+    <PageContainer title="个人信息">
+      <Space direction="vertical" style={{ width: '100%' }} size={[0, 48]}>
+        <Layout>
+          <Layout hasSider>
+            <Content>
+              <Form
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 14 }}
+                layout="horizontal"
+                style={{ maxWidth: 600 }}
+              >
+                <Form.Item label="用户名">
+                  <Input readOnly value={currentUser?.userName}/>
+                </Form.Item>
+                <Form.Item label="AccessKey">
+                  <Input readOnly value={currentUser?.accessKey}/>
+                </Form.Item>
+                <Form.Item label="SercretKet">
+                  <Input readOnly value={currentUser?.secretKey}/>
+                </Form.Item>
+                <Form.Item label="剩余调用次数">
+                  {currentUser?.count}
+                </Form.Item>
+              </Form>
+            </Content>
+          </Layout>
+        </Layout>
+      </Space>
     </PageContainer>
   );
 };

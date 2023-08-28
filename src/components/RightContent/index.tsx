@@ -18,32 +18,6 @@ const GlobalHeaderRight: React.FC = () => {
   }
   return (
     <Space className={className}>
-      {/*<HeaderSearch*/}
-      {/*  className={`${styles.action} ${styles.search}`}*/}
-      {/*  placeholder="站内搜索"*/}
-      {/*  defaultValue="umi ui"*/}
-      {/*  options={[*/}
-      {/*    {*/}
-      {/*      label: <a href="https://umijs.org/zh/guide/umi-ui.html">umi ui</a>,*/}
-      {/*      value: 'umi ui',*/}
-      {/*    },*/}
-      {/*    {*/}
-      {/*      label: <a href="next.ant.design">鱼皮接口</a>,*/}
-      {/*      value: '鱼皮接口',*/}
-      {/*    },*/}
-      {/*    {*/}
-      {/*      label: <a href="https://protable.ant.design/">Pro Table</a>,*/}
-      {/*      value: 'Pro Table',*/}
-      {/*    },*/}
-      {/*    {*/}
-      {/*      label: <a href="https://prolayout.ant.design/">Pro Layout</a>,*/}
-      {/*      value: 'Pro Layout',*/}
-      {/*    },*/}
-      {/*  ]}*/}
-      {/*  onSearch={value => {*/}
-      {/*    console.log('input', value);*/}
-      {/*  }}*/}
-      {/*/>*/}
       {/*<span*/}
       {/*  className={styles.action}*/}
       {/*  onClick={() => {*/}
@@ -52,7 +26,7 @@ const GlobalHeaderRight: React.FC = () => {
       {/*>*/}
       {/*  <QuestionCircleOutlined />*/}
       {/*</span>*/}
-      {/*<Avatar />*/}
+      <Avatar/>
     </Space>
   );
 };

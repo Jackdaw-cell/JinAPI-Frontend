@@ -6,26 +6,43 @@ import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import { requestConfig } from './requestConfig';
 import {getLoginUserUsingGET} from "@/services/yuapi-backend/userController";
+import HeaderDropdown from "@/components/HeaderDropdown";
+
+
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
-
+// 白名单
+// 定义一个白名单，白名单里面的路由可以不需要登陆也可以进入
+// 一个是注册页面，一个是登陆页面
+const NO_LOGIN_WHITE_LIST=['/user/register','/user/login'];
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
-export async function getInitialState(): Promise<InitialState> {
+export async function getInitialState(): Promise<InitialState | undefined> {
   // 当页面首次加载时，获取要全局保存的数据，比如用户登录信息
   const state: InitialState = {
     loginUser: undefined,
   }
-  try {
-    const res = await getLoginUserUsingGET();
-    if (res.data) {
-      state.loginUser = res.data;
+  //获取当前用户，如果获取不到则跳到登录
+  const fetchUserInfo = async () => {
+    try {
+      const res = await getLoginUserUsingGET();
+      if (res.data) {
+        state.loginUser = res.data;
+      }
+      return state
+    } catch (error) {
+      history.push(loginPath);
     }
-  } catch (error) {
-    history.push(loginPath);
+    return undefined;
+  };
+  // 判断目标是否为白名单页面
+  // 不需要查询用户存在性也能进入白名单
+  if (NO_LOGIN_WHITE_LIST.includes(history.location.pathname)) {
+    return state;
   }
-  return state;
+  const currentUser = await fetchUserInfo();
+  return currentUser;
 }
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
@@ -33,14 +50,20 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
   return {
     layout: "top",
     rightContentRender: () => <RightContent />,
-    waterMarkProps: {
-      content: initialState?.loginUser?.userName,
-    },
+    // waterMarkProps: {
+    //   content: initialState?.loginUser?.userName,
+    // },
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history;
+      if (NO_LOGIN_WHITE_LIST.includes(location.pathname)){
+        return;
+      }
       // 如果没有登录，重定向到 login
-      if (!initialState?.loginUser && location.pathname !== loginPath) {
+      // if (!initialState?.loginUser && location.pathname !== loginPath) {
+      //   history.push(loginPath);
+      // }
+      if (!initialState?.loginUser) {
         history.push(loginPath);
       }
     },
@@ -64,14 +87,14 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         width: '331px',
       },
     ],
-    links: isDev
-      ? [
-          <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-            <LinkOutlined />
-            <span>OpenAPI 文档</span>
-          </Link>,
-        ]
-      : [],
+    // links: isDev
+    //   ? [
+    //       <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
+    //         <LinkOutlined />
+    //         <span>OpenAPI 文档</span>
+    //       </Link>,
+    //     ]
+    //   : [],
     menuHeaderRender: undefined,
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,

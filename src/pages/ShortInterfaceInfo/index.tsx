@@ -58,7 +58,7 @@ const Index: React.FC = () => {
           ...values,
         });
       }
-      setInvokeRes(res.data);
+      setInvokeRes(JSON.stringify(res));
       message.success('请求成功');
     } catch (error: any) {
       message.error('操作失败，' + error.message);
@@ -79,8 +79,6 @@ const Index: React.FC = () => {
                 <Descriptions.Item label="请求方法">{data.method}</Descriptions.Item>
                 <Descriptions.Item label="请求头">{data.requestHeader}</Descriptions.Item>
                 <Descriptions.Item label="请求参数">{data.requestParams}</Descriptions.Item>
-                <Descriptions.Item label="响应头">{data.responseHeader}</Descriptions.Item>
-                <Descriptions.Item label="响应体">{data.responseBody}</Descriptions.Item>
                 <Descriptions.Item label="测试请求参数">{data.testRequestParams}</Descriptions.Item>
                 <Descriptions.Item label="测试响应">{data.testResponse}</Descriptions.Item>
                 <Descriptions.Item label="创建时间">{data.createTime}</Descriptions.Item>

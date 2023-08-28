@@ -52,6 +52,14 @@ export async function getLoginUserUsingGET(options?: { [key: string]: any }) {
   });
 }
 
+/** getLoginUserDetailUsingGET GET /api/user/get/userDetail */
+export async function getLoginUserDetailUsingGET(options?: { [key: string]: any }) {
+  return request<API.BaseResponseLoginUserDetailVO>('/api/user/get/userDetail', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** getUserVOById GET /api/user/get/vo */
 export async function getUserVOByIdUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)

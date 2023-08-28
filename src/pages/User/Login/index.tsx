@@ -15,7 +15,7 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 // @ts-ignore
-import { history,  useModel } from 'umi';
+import {  history,  useModel } from 'umi';
 import { Alert, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import styles from './index.less';
@@ -107,12 +107,17 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <UserOutlined className={styles.prefixIcon} />,
                 }}
-                placeholder={'用户名: admin or user'}
+                placeholder={'用户名: jackdaw'}
                 rules={[
                   {
                     required: true,
                     message: '用户名是必填项！',
                   },
+                  {
+                    min: 4,
+                    type: 'string',
+                    message: '用户名不可以少于4位nya'
+                  }
                 ]}
               />
               <ProFormText.Password
@@ -121,12 +126,17 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <LockOutlined className={styles.prefixIcon} />,
                 }}
-                placeholder={'密码: ant.design'}
+                placeholder={'密码: SBnightwatch777'}
                 rules={[
                   {
                     required: true,
                     message: '密码是必填项！',
                   },
+                  {
+                    min: 8,
+                    type: 'string',
+                    message: '密码不可以少于8位nya'
+                  }
                 ]}
               />
             </>
@@ -195,14 +205,16 @@ const Login: React.FC = () => {
             <ProFormCheckbox noStyle name="autoLogin">
               自动登录
             </ProFormCheckbox>
-            {/*<a*/}
-            {/*  style={{*/}
-            {/*    float: 'right',*/}
-            {/*  }}*/}
-            {/*>*/}
-            {/*  忘记密码 ?*/}
-            {/*</a>*/}
+            <a
+              style={{
+                float: 'right',
+              }}
+              href="/user/register"
+            >
+              注册
+            </a>
           </div>
+
         </LoginForm>
       </div>
       <Footer />
