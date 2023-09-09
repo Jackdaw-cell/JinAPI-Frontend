@@ -8,8 +8,14 @@ import {
   Form,
   Input,
   Select,
-  Upload,} from 'antd';
-import {getLoginUserDetailUsingGET, getLoginUserUsingGET} from "@/services/jackdawAPI-backend/userController";
+  Upload, Button,
+} from 'antd';
+import {
+  addCount,
+  getLoginUserDetailUsingGET,
+  getLoginUserUsingGET,
+  userAddCount
+} from "@/services/jackdawAPI-backend/userController";
 
 type loginUserDetail={
   id: string;
@@ -57,11 +63,24 @@ const Index: React.FC = () => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const addCount = ()=>{
+    const userAddcount: API.UserCountAddRequest={count:10}
+    userAddCount(userAddcount).then(()=>{
+      message.success("签到成功，调用次数+10")
+    }).catch(err=>{
+      message.error("签到失败")
+    })
+  }
+
   useEffect(() => {
     loadData();
   }, []);
 
 
+
+
+  // @ts-ignore
   return (
 
     <PageContainer title="个人信息">
@@ -86,6 +105,9 @@ const Index: React.FC = () => {
                 </Form.Item>
                 <Form.Item label="剩余调用次数">
                   {currentUser?.count}
+                  <span>&nbsp;</span>
+                  <span>&nbsp;</span>
+                  <Button onClick={addCount}>签到获取次数</Button>
                 </Form.Item>
               </Form>
             </Content>

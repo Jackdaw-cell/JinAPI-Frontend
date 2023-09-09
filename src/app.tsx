@@ -7,7 +7,7 @@ import { history, Link } from '@umijs/max';
 import { requestConfig } from './requestConfig';
 import {getLoginUserUsingGET} from "@/services/yuapi-backend/userController";
 import HeaderDropdown from "@/components/HeaderDropdown";
-
+import "@ant-design/flowchart/dist/index.css";
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -87,14 +87,14 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         width: '331px',
       },
     ],
-    // links: isDev
-    //   ? [
-    //       <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-    //         <LinkOutlined />
-    //         <span>OpenAPI 文档</span>
-    //       </Link>,
-    //     ]
-    //   : [],
+    links: isDev
+      ? [
+          <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
+            <LinkOutlined />
+            <span>OpenAPI 文档</span>
+          </Link>,
+        ]
+      : [],
     menuHeaderRender: undefined,
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,

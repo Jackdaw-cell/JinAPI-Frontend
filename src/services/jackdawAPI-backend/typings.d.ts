@@ -334,6 +334,10 @@ declare namespace API {
     userPassword?: string;
   };
 
+  type UserCountAddRequest = {
+    count: number
+  };
+
   type UserUpdateMyRequest = {
     userAvatar?: string;
     userName?: string;

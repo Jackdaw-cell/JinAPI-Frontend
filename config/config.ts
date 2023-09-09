@@ -3,6 +3,7 @@ import { defineConfig } from '@umijs/max';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
+import {LOCALHOST} from "@/constants";
 const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   /**
@@ -104,7 +105,8 @@ export default defineConfig({
   openAPI: [
     {
       requestLibPath: "import { request } from '@umijs/max'",
-      schemaPath: 'http://http://openapibackend.linhaijian.top//api/v3/api-docs',
+      // schemaPath: "http://localhost:8101/api/v3/api-docs",
+      schemaPath: "http://111.230.23.40:8101/api/v3/api-docs",
       projectName: 'jackdawAPI-backend',
     },
   ],

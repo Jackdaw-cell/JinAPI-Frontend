@@ -146,6 +146,7 @@ declare namespace API {
     updateTime?: string;
     url?: string;
     userId?: number;
+    count?: number;
   };
 
   type InterfaceInfoAddRequest = {
@@ -195,11 +196,11 @@ declare namespace API {
     testRequestParams?: string;
     testResponse?: string;
     status?: number;
-    totalNum?: number;
     updateTime?: string;
     url?: string;
     userId?: number;
     connectType?: number;
+    count?: number;
   };
 
   type listInterfaceInfoByPageUsingGETParams = {

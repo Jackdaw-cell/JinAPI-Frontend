@@ -1,7 +1,7 @@
 export default [
-  { path: '/', name: '快速开始', icon: 'smile', component: './Begining' },
-  { path: '/shortInterface', name: '短连接接口', icon: 'smile', component: './ShortInterface' },
-  { path: '/longInterface', name: '长连接接口', icon: 'smile', component: './LongInterface' },
+  { path: '/', name: '快速开始', icon: 'ReadOutlined', component: './Begining' },
+  { path: '/shortInterface', name: '短连接接口服务', icon: 'smile', component: './ShortInterface' },
+  { path: '/longInterface', name: 'OpenAI对话服务', icon: 'RedditCircleFilled', component: './LongInterface' },
   { path: '/short_interface_info/:id', name: '查看接口', icon: 'smile', component: './ShortInterfaceInfo', hideInMenu: true },
   { path: '/long_interface_info/:id', name: '查看接口', icon: 'smile', component: './LongInterfaceInfo', hideInMenu: true },
   { path: '/account', name: '个人信息',  component: './AccountInfo', hideInMenu: true },

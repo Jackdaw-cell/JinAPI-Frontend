@@ -1,8 +1,10 @@
 import { PageContainer } from '@ant-design/pro-components';
 import '@umijs/max';
 import React, {useEffect, useState} from 'react';
-import ReactECharts from 'echarts-for-react';
-import {listTopInvokeInterfaceInfoUsingGET} from "@/services/jackdawAPI-backend/analysisController";
+import {listInterfaceInfoByPageUsingGET} from "@/services/yuapi-backend/interfaceInfoController";
+// @ts-ignore
+import { Pie } from '@ant-design/plots';
+
 
 /**
  * 接口分析
@@ -10,62 +12,62 @@ import {listTopInvokeInterfaceInfoUsingGET} from "@/services/jackdawAPI-backend/
  */
 const InterfaceAnalysis: React.FC = () => {
 
-  const [data, setData] = useState<API.InterfaceInfoVO[]>([]);
-
+  const [infoList, setInfoList] = useState<API.InterfaceInfo[]>([]);
+  //
   useEffect(() => {
     try {
-      listTopInvokeInterfaceInfoUsingGET().then(res => {
+      listInterfaceInfoByPageUsingGET({
+        current: 1,
+        pageSize: 10,
+      }).then(res => {
         if (res.data) {
-          setData(res.data);
+          console.log(res.data.records)
+          // @ts-ignore
+          setInfoList(res.data.records);
         }
       })
     } catch (e: any) {
 
     }
-    // todo 从远程获取数据
+  //   // todo 从远程获取数据
   }, [])
-
-  // 映射：{ value: 1048, name: 'Search Engine' },
-  const chartData = data.map(item => {
+  //
+  // // 映射：{ value: 1048, name: 'Search Engine' },
+  const data = infoList.map(item => {
     return {
-      value: item.totalNum,
-      name: item.name,
+      value: item.count,
+      type: item.name,
     }
   })
 
-  const option = {
-    title: {
-      text: '调用次数最多的接口TOP3',
-      left: 'center',
+  const config = {
+    appendPadding: 10,
+    data,
+    angleField: 'value',
+    colorField: 'type',
+    radius: 0.9,
+    label: {
+      type: 'inner',
+      offset: '-30%',
+      content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
+      style: {
+        fontSize: 14,
+        textAlign: 'center',
+      },
     },
-    tooltip: {
-      trigger: 'item',
-    },
-    legend: {
-      orient: 'vertical',
-      left: 'left',
-    },
-    series: [
+    interactions: [
       {
-        name: 'Access From',
-        type: 'pie',
-        radius: '50%',
-        data: chartData,
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
-          },
-        },
+        type: 'element-active',
       },
     ],
   };
 
   return (
     <PageContainer>
-      <ReactECharts option={option} />
+      <Pie {...config} />
+      {/*<ReactECharts option={option} />*/}
     </PageContainer>
   );
 };
+
 export default InterfaceAnalysis;

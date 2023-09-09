@@ -60,6 +60,7 @@ export async function getLoginUserDetailUsingGET(options?: { [key: string]: any 
   });
 }
 
+
 /** getUserVOById GET /api/user/get/vo */
 export async function getUserVOByIdUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
@@ -149,6 +150,21 @@ export async function userRegisterUsingPOST(
   options?: { [key: string]: any },
 ) {
   return request<API.BaseResponselong>('/api/user/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** addCount POST /api/user/update/addCount */
+export async function userAddCount(
+  body: API.UserCountAddRequest,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponselong>('/api/user/update/addCount', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

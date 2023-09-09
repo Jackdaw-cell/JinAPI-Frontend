@@ -26,9 +26,8 @@ const StepperContent: React.FC<ModalProps> = () => {
   let [text, setText] = useState<string>('');
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [code, setCode] = React.useState(
-    `//前端创建sse连接，F12在控制台输入以下代码
-    eventSource = new EventSourcePolyfill('http://openApi.
-    linhaijian.top/api/interfaceInfo/invokeByCreateSse');
+    `//前端创建sse连接，编写JS代码如下并且运行
+    eventSource = new EventSourcePolyfill('http://111.230.23.40/api/interfaceInfo/invokeByCreateSse');
     eventSource.onopen = () => { //创建连接回调 };
     eventSource.onmessage = (event) => {//消息处理回调};
     eventSource.onerror = () => {event.target.close();};`
@@ -165,7 +164,7 @@ const StepperContent: React.FC<ModalProps> = () => {
           'Charset': 'UTF-8',
           'DataType': 'json',
           "uid": userId]`,
-      requestParams:`{"msg": "你知道女神异闻录5吗","apiKey": "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"}`,
+      requestParams:`{"msg": "我们来玩数字接龙怎么样，我说1你说下一位","apiKey": "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"}`,
       responseHeader:'[Content-Type: application/json]'
     }
     const chat = (body: any, options?: any)=>{
@@ -217,7 +216,7 @@ const StepperContent: React.FC<ModalProps> = () => {
           <Card title="在线测试">
             <Form name="invoke" layout="vertical" onFinish={handleClick} >
               <Form.Item label="请求体" name="msg" rules={[{ required: true, message: '必须有请求体！！' }]}>
-                <Input.TextArea rows={8}/>
+                <Input.TextArea rows={8} placeholder={data.requestParams}/>
               </Form.Item>
               <Form.Item wrapperCol={{ span: 16 }} >
                 <Button type="primary" htmlType="submit">
@@ -325,9 +324,9 @@ const StepperContent: React.FC<ModalProps> = () => {
       </Stepper>
       {activeStep === steps.length && (
         <Paper square elevation={0} sx={{ p: 3 }}>
-          <Typography>All steps completed - you&apos;re finished</Typography>
+          <Typography>一次SSE对话已结束</Typography>
           <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-            Reset
+            重试
           </Button>
         </Paper>
       )}

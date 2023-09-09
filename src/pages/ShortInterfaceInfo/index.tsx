@@ -93,7 +93,11 @@ const Index: React.FC = () => {
           <Card title="在线测试">
             <Form name="invoke" layout="vertical" onFinish={onFinish}>
               <Form.Item label="请求参数" name="userRequestParams">
-                <Input.TextArea rows={8}/>
+                {data ? (
+                <Input.TextArea rows={8} placeholder={data.testRequestParams}/>
+                ) : (
+                  <>输入测试请求参数</>
+                )}
               </Form.Item>
               <Form.Item wrapperCol={{ span: 16 }}>
                 <Button type="primary" htmlType="submit">
