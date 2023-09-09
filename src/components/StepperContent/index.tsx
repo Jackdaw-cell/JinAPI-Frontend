@@ -27,7 +27,7 @@ const StepperContent: React.FC<ModalProps> = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [code, setCode] = React.useState(
     `//前端创建sse连接，编写JS代码如下并且运行
-    eventSource = new EventSourcePolyfill('http://111.230.23.40/api/interfaceInfo/invokeByCreateSse');
+    eventSource = new EventSourcePolyfill('http://ip地址/api/interfaceInfo/invokeByCreateSse');
     eventSource.onopen = () => { //创建连接回调 };
     eventSource.onmessage = (event) => {//消息处理回调};
     eventSource.onerror = () => {event.target.close();};`
@@ -164,7 +164,7 @@ const StepperContent: React.FC<ModalProps> = () => {
           'Charset': 'UTF-8',
           'DataType': 'json',
           "uid": userId]`,
-      requestParams:`{"msg": "我们来玩数字接龙怎么样，我说1你说下一位","apiKey": "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"}`,
+      requestParams:`{"msg": "我们来玩数字接龙怎么样，我说1你说下一位","apiKey": "你个人的OpenKey"}`,
       responseHeader:'[Content-Type: application/json]'
     }
     const chat = (body: any, options?: any)=>{
